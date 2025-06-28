@@ -23,7 +23,6 @@ public class Contact {
     private String name;
 
     @NotBlank(message="Mobile number must not be blank")
-    @Pattern(regexp="(^$|[0-9]{14})",message = "Mobile number must be 11 digits")
     private String mobileNum;
 
     @NotBlank(message="Email must not be blank")
