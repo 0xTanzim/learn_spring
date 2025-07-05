@@ -18,13 +18,15 @@ public class ProjectSecurityConfig {
                 .csrf(csrf -> csrf
                         .ignoringRequestMatchers("/saveMsg", "/holidays/**" )
                         .ignoringRequestMatchers("/h2-console/**")
-
                 )
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/home", "/").permitAll()
                         .requestMatchers("/holidays/**").permitAll()
                         .requestMatchers("/contact").permitAll()
                         .requestMatchers("/dashboard").authenticated()
+                        .requestMatchers("/displayMessages").hasRole("ADMIN")
+                        .requestMatchers("/closeMsg/**").hasRole("ADMIN")
+
                         .requestMatchers("/about").permitAll()
                         .requestMatchers("/saveMsg").permitAll()
                         .requestMatchers("/courses").permitAll()

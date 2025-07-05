@@ -12,6 +12,7 @@ import com.eazybytes.eazyschool.repository.ContactRepository;
 import lombok.extern.slf4j.Slf4j;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 
 @Slf4j
@@ -39,4 +40,17 @@ public class ContactService {
         return isSaved;
     }
 
+    public List<Contact> findMsgsWithOpenStatus(){
+        List<Contact> contactMsgs = contactRepository.findMsgsWithStatus(EazySchoolConstants.OPEN);
+        return contactMsgs;
+    }
+
+    public boolean updateMsgStatus(int contactId, String updatedBy){
+        boolean isUpdated = false;
+        int result = contactRepository.updateMsgStatus(contactId,EazySchoolConstants.CLOSE, updatedBy);
+        if(result>0) {
+            isUpdated = true;
+        }
+        return isUpdated;
+    }
 }
