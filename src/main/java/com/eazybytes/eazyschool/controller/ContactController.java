@@ -9,10 +9,6 @@ import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.context.annotation.RequestScope;
-import org.springframework.web.context.annotation.SessionScope;
-import org.springframework.web.servlet.ModelAndView;
 
 import jakarta.validation.Valid;
 
@@ -41,9 +37,9 @@ public class ContactController {
             log.error("Contact form validation failed due to :", errors.toString());
             return "contact.html";
         }
+
         contactService.saveMessageDetails(contact);
-        contactService.setCounter(contactService.getCounter()+1);
-        log.info("Number of times the Contact form is submitted :", contactService.getCounter());
+
         return "redirect:/contact";
     }
 
