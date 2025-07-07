@@ -1,31 +1,22 @@
 package com.eazybytes.eazyschool.model;
 
-import java.time.LocalDateTime;
-
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 
-
 @Data
+@Entity
+@Table(name="contact_msg")
 public class Contact extends BaseEntity{
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "contact_id")
     private int contactId;
 
-    /*
-    * @NotNull: Checks if a given field is not null but allows empty values & zero elements inside collections.
-      @NotEmpty: Checks if a given field is not null and its size/length is greater than zero.
-      @NotBlank: Checks if a given field is not null and trimmed length is greater than zero.
-    * */
     @NotBlank(message="Name must not be blank")
     @Size(min=3, message="Name must be at least 3 characters long")
     private String name;
