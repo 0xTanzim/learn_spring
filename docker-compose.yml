@@ -1,0 +1,40 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:8.3              # Use stable MySQL version
+    container_name: mysql_db
+    restart: unless-stopped
+    ports:
+      - "3306:3306"               # MySQL exposed to host
+    environment:
+
+      MYSQL_ROOT_PASSWORD: rootpass123
+      MYSQL_DATABASE: myapp_db
+      MYSQL_USER: myuser
+      MYSQL_PASSWORD: userpass123
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - backend_net
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: mysql_gui
+    restart: unless-stopped
+    ports:
+      - "5555:80"                 # GUI available at http://localhost:5555
+    environment:
+      PMA_HOST: mysql             # Connects to "mysql" service
+      MYSQL_ROOT_PASSWORD: rootpass123
+    depends_on:
+      - mysql
+    networks:
+      - backend_net
+
+volumes:
+  mysql_data:
+
+networks:
+  backend_net:
+    driver: bridge

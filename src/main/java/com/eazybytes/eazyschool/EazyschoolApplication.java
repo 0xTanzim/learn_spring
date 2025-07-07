@@ -7,6 +7,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class EazyschoolApplication {
 
 	public static void main(String[] args) {
+		System.out.println("ENV URL: " + System.getenv("DB_URL"));
+
 		SpringApplication.run(EazyschoolApplication.class, args);
 	}
 

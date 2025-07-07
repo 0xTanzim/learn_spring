@@ -17,7 +17,7 @@ public class ProjectSecurityConfig {
         http
                 .csrf(csrf -> csrf
                         .ignoringRequestMatchers("/saveMsg", "/holidays/**" )
-                        .ignoringRequestMatchers("/h2-console/**")
+
                 )
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/home", "/").permitAll()
@@ -32,8 +32,6 @@ public class ProjectSecurityConfig {
                         .requestMatchers("/courses").permitAll()
                         .requestMatchers("/login").permitAll()
                         .requestMatchers("/logout").permitAll()
-
-                        .requestMatchers("/h2-console/**").permitAll()
                         .requestMatchers("/assets/**").permitAll()
                         .anyRequest().authenticated()
                 )
@@ -50,9 +48,6 @@ public class ProjectSecurityConfig {
                         .permitAll()
                         .invalidateHttpSession(true)
                 );
-
-        http.headers(headersConfigurer -> headersConfigurer
-                .frameOptions(frameOptionsConfig -> frameOptionsConfig.disable()));
 
         return http.build();
     }
