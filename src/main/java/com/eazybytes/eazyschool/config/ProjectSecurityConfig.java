@@ -16,8 +16,7 @@ public class ProjectSecurityConfig {
     SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(csrf -> csrf
-                        .ignoringRequestMatchers("/saveMsg", "/holidays/**" )
-
+                        .ignoringRequestMatchers("/saveMsg", "/holidays/**", "/public/**" )
                 )
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/home", "/").permitAll()
@@ -32,6 +31,7 @@ public class ProjectSecurityConfig {
                         .requestMatchers("/courses").permitAll()
                         .requestMatchers("/login").permitAll()
                         .requestMatchers("/logout").permitAll()
+                        .requestMatchers("/public/**").permitAll()
                         .requestMatchers("/assets/**").permitAll()
                         .anyRequest().authenticated()
                 )
