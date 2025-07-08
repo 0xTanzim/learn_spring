@@ -9,8 +9,6 @@ import com.eazybytes.eazyschool.model.Contact;
 import com.eazybytes.eazyschool.repository.ContactRepository;
 
 import lombok.extern.slf4j.Slf4j;
-
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,9 +26,6 @@ public class ContactService {
     public boolean saveMessageDetails(Contact contact){
         boolean isSaved = false;
         contact.setStatus(EazySchoolConstants.OPEN);
-        contact.setCreatedBy(EazySchoolConstants.ANONYMOUS);
-        contact.setCreatedAt(LocalDateTime.now());
-
         System.out.println("Contact Details: " + contact);
 
         Contact result = contactRepository.save(contact);
@@ -46,17 +41,14 @@ public class ContactService {
         return contactMsgs;
     }
 
-    public boolean updateMsgStatus(int contactId, String updatedBy){
+    public boolean updateMsgStatus(int contactId){
         boolean isUpdated = false;
 
         Optional<Contact> contactOptional = contactRepository.findById(contactId);
 
         contactOptional.ifPresent(contact -> {
             contact.setStatus(EazySchoolConstants.CLOSE);
-            contact.setUpdatedBy(updatedBy);
-            contact.setUpdatedAt(LocalDateTime.now());
         });
-
 
         Contact result = contactRepository.save(contactOptional.get());
 
