@@ -47,7 +47,7 @@ public class PasswordStrengthValidator implements ConstraintValidator<PasswordVa
         boolean hasDigit = password.chars().anyMatch(Character::isDigit);
         boolean hasUppercase = password.chars().anyMatch(Character::isUpperCase);
         boolean hasLowercase = password.chars().anyMatch(Character::isLowerCase);
-        return hasDigit && hasUppercase && hasLowercase;
+        return hasUppercase && hasLowercase;
     }
 
 

@@ -27,7 +27,7 @@ import lombok.Data;
 public class Person extends BaseEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int personId;
 
     @NotBlank(message="Name must not be blank")
@@ -56,5 +56,13 @@ public class Person extends BaseEntity {
     @Size(min=6, message="Confirm Password must be at least 6 characters long")
     @Transient // it is not a column in the database
     private String confirmPwd;
+
+    @OneToOne(fetch = FetchType.EAGER,cascade = CascadeType.PERSIST, targetEntity = Roles.class)
+    @JoinColumn(name = "role_id", referencedColumnName = "roleId",nullable = false)
+    private Roles roles;
+
+    @OneToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL, targetEntity = Address.class)
+    @JoinColumn(name = "address_id", referencedColumnName = "addressId",nullable = true)
+    private Address address;
 
 }
