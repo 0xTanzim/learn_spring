@@ -1,10 +1,11 @@
 package com.eazybytes.eazyschool.validations;
 
+import java.util.List;
+
 import com.eazybytes.eazyschool.annotation.PasswordValidator;
+
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
-
-import java.util.List;
 
 public class PasswordStrengthValidator implements ConstraintValidator<PasswordValidator, String> {
 
@@ -25,11 +26,9 @@ public class PasswordStrengthValidator implements ConstraintValidator<PasswordVa
 
         String trimmedPassword = password.trim();
 
-        if (!hasMinimumLength(trimmedPassword)) return false;
-        if (isCommonPassword(trimmedPassword)) return false;
-        if (!containsRequiredCharacterTypes(trimmedPassword)) return false;
-
-        return true;
+        return hasMinimumLength(trimmedPassword)
+                && !isCommonPassword(trimmedPassword)
+                && containsRequiredCharacterTypes(trimmedPassword);
     }
 
     // Check for minimum password length
@@ -44,17 +43,14 @@ public class PasswordStrengthValidator implements ConstraintValidator<PasswordVa
 
     // Check if password contains at least one digit, one uppercase, one lowercase
     private boolean containsRequiredCharacterTypes(String password) {
-        boolean hasDigit = password.chars().anyMatch(Character::isDigit);
         boolean hasUppercase = password.chars().anyMatch(Character::isUpperCase);
         boolean hasLowercase = password.chars().anyMatch(Character::isLowerCase);
         return hasUppercase && hasLowercase;
     }
 
-
-
-    private void setMessage(ConstraintValidatorContext context, String message) {
-        context.disableDefaultConstraintViolation();
-        context.buildConstraintViolationWithTemplate(message)
-                .addConstraintViolation();
-    }
+    // private void setMessage(ConstraintValidatorContext context, String message) {
+    //     context.disableDefaultConstraintViolation();
+    //     context.buildConstraintViolationWithTemplate(message)
+    //             .addConstraintViolation();
+    // }
 }

@@ -43,5 +43,7 @@ Learn
 - [x] Spring  Data JPA - Java Persistence API
 -[x] Spring Data JPA - Auditing
 - [x] Custom validator
+- [x] Password Hashing
+- 
 
 

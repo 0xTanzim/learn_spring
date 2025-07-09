@@ -37,7 +37,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
         if (person != null && person.getPersonId()> 0 &&
         passwordEncoder.matches(password, person.getPwd())) {
             return new UsernamePasswordAuthenticationToken(
-                    person.getName(), null,getGrantedAuthorities(person.getRoles()) );
+                    email, null,getGrantedAuthorities(person.getRoles()) );
         }else {
             // If the user does not exist or password is incorrect, return null
             // This will trigger an authentication failure
