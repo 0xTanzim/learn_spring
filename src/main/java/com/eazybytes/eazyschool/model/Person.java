@@ -3,21 +3,15 @@ package com.eazybytes.eazyschool.model;
 import com.eazybytes.eazyschool.annotation.FieldsValueMatch;
 import com.eazybytes.eazyschool.annotation.PasswordValidator;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Transient;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 @Entity
 @FieldsValueMatch.List({
                 @FieldsValueMatch(field = "pwd", fieldMatch = "confirmPwd", message = "The password fields must match"),
@@ -63,5 +57,12 @@ public class Person extends BaseEntity {
         @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, targetEntity = Address.class)
         @JoinColumn(name = "address_id", referencedColumnName = "addressId", nullable = true)
         private Address address;
+
+
+        @ManyToOne(fetch = FetchType.LAZY, optional = true)
+        @JoinColumn(name = "class_id", referencedColumnName = "classId", nullable = true)
+        private EazyClass eazyClass;
+
+
 
 }

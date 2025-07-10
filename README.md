@@ -44,6 +44,8 @@ Learn
 -[x] Spring Data JPA - Auditing
 - [x] Custom validator
 - [x] Password Hashing
+- [x] class room CURD 
+- [x] Add student 
 - 
 
 
