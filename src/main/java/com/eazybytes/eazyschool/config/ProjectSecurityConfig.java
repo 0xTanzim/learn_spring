@@ -27,6 +27,7 @@ public class ProjectSecurityConfig {
                 .requestMatchers("/displayMessages").hasRole("ADMIN")
                 .requestMatchers("/admin/**").hasRole("ADMIN")
                 .requestMatchers("/closeMsg/**").hasRole("ADMIN")
+                .requestMatchers("/student/**").hasRole("STUDENT")
                 .requestMatchers("/about").permitAll()
                 .requestMatchers("/saveMsg").permitAll()
                 .requestMatchers("/courses").permitAll()
