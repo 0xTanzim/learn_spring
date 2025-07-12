@@ -66,4 +66,12 @@ https://docs.spring.io/spring-cloud-openfeign/docs/current/reference/html/
 ---
 
 
+```aiignore
+spring-boot-starter-data-rest 
+```
+### 🛠 Spring Boot Starter Data REST
+The spring-boot-starter-data-rest is a Spring Boot starter that simplifies the creation of RESTful APIs by automatically exposing Spring Data repositories as RESTful endpoints. It builds upon the capabilities of Spring Data and Spring MVC to provide a hypermedia-driven API for your domain model. 
 
+The HAL Explorer
+
+The HAL Explorer

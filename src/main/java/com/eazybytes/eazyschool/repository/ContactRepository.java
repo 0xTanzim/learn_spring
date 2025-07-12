@@ -17,7 +17,7 @@ public interface ContactRepository extends CrudRepository<Contact, Integer> {
 
     // ✅ Spring Data Derived Queries — clean, concise
     List<Contact> findByStatus(String status);
-    Page<Contact> findByStatus(String status, Pageable pageable);
+    Page<Contact> findByStatusWithPage(String status, Pageable pageable);
 
     // ✅ Uses @NamedQuery from Entity
     Page<Contact> findOpenMsgs(@Param("status") String status, Pageable pageable);
