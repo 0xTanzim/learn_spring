@@ -59,6 +59,11 @@ This is my progress tracker for mastering essential Spring Boot components and b
 - [Spring Data JPA Auditing (Official Guide)](https://docs.spring.io/spring-data/jpa/reference/auditing.html)
 
 ---
+Calling REST Services
+https://spring.io/projects/spring-cloud-openfeign
+https://www.baeldung.com/spring-cloud-openfeign
+https://docs.spring.io/spring-cloud-openfeign/docs/current/reference/html/
+---
 
 
 
