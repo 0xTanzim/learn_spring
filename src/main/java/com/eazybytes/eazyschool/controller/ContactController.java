@@ -6,12 +6,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
-import org.springframework.web.bind.annotation.RequestParam;
+
 import org.springframework.web.servlet.ModelAndView;
 
 import com.eazybytes.eazyschool.model.Contact;
@@ -65,9 +64,9 @@ public class ContactController {
         return modelAndView;
     }
 
-    @RequestMapping(value = "/closeMsg", method = GET)
+    @GetMapping(value = "/closeMsg")
     public String closeMsg(@RequestParam final int id) {
-        this.contactService.updateMsgStatus(id);
+      this.contactService.updateMsgStatus(id);
         return "redirect:/displayMessages";
     }
 

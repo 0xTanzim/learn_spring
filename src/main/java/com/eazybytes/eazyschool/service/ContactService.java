@@ -53,16 +53,14 @@ public class ContactService {
     public boolean updateMsgStatus(int contactId){
         boolean isUpdated = false;
 
-        Optional<Contact> contactOptional = contactRepository.findById(contactId);
+        int rows = contactRepository.updateStatusById(
+                contactId, EazySchoolConstants.CLOSE);
 
-        contactOptional.ifPresent(contact -> {
-            contact.setStatus(EazySchoolConstants.CLOSE);
-        });
-
-        Contact result = contactRepository.save(contactOptional.get());
-
-        if(result != null && result.getContactId() > 0) {
+        if(rows > 0) {
             isUpdated = true;
+            log.info("Contact with ID {} updated successfully.", contactId);
+        } else {
+            log.warn("No contact found with ID {} to update.", contactId);
         }
 
         return isUpdated;
