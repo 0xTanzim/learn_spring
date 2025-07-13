@@ -8,6 +8,7 @@ import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -20,11 +21,9 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller("profileControllerBean")
 public class ProfileController {
 
-    private final PersonRepository personRepository;
+    @Autowired
+    private  PersonRepository personRepository;
 
-    public ProfileController(PersonRepository personRepository) {
-        this.personRepository = personRepository;
-    }
 
     @RequestMapping("/displayProfile")
     public ModelAndView displayMessages(Model model, HttpSession session) {

@@ -1,28 +1,26 @@
 package com.eazybytes.eazyschool.controller;
 
-import java.util.List;
-
+import com.eazybytes.eazyschool.model.Contact;
+import com.eazybytes.eazyschool.service.ContactService;
+import jakarta.validation.Valid;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
-
-import static org.springframework.web.bind.annotation.RequestMethod.GET;
-import static org.springframework.web.bind.annotation.RequestMethod.POST;
-
 import org.springframework.web.servlet.ModelAndView;
 
-import com.eazybytes.eazyschool.model.Contact;
-import com.eazybytes.eazyschool.service.ContactService;
+import java.util.List;
 
-import jakarta.validation.Valid;
-import lombok.extern.slf4j.Slf4j;
+import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 @Slf4j
 @Controller
 public class ContactController {
 
+    @Autowired
     private final ContactService contactService;
 
     public ContactController(final ContactService contactService) {
@@ -38,7 +36,7 @@ public class ContactController {
     @RequestMapping(value = "/saveMsg", method = POST)
     public String saveMessage(@Valid @ModelAttribute("contact") final Contact contact, final Errors errors) {
         if (errors.hasErrors()) {
-            ContactController.log.error("Contact form validation failed due to :", errors.toString());
+            ContactController.log.error("Contact form validation failed due to :", errors);
             return "contact.html";
         }
 
@@ -48,26 +46,26 @@ public class ContactController {
     }
 
     @RequestMapping("/displayMessages/page/{pageNum}")
-    public ModelAndView displayMessages(Model model,
-                                        @PathVariable(name = "pageNum") int pageNum, @RequestParam("sortField") String sortField,
-                                        @RequestParam("sortDir") String sortDir) {
-        Page<Contact> msgPage = contactService.findMsgsWithOpenStatus(pageNum,sortField,sortDir);
-        List<Contact> contactMsgs = msgPage.getContent();
-        ModelAndView modelAndView = new ModelAndView("messages.html");
+    public ModelAndView displayMessages(final Model model,
+                                        @PathVariable(name = "pageNum") final int pageNum, @RequestParam("sortField") final String sortField,
+                                        @RequestParam("sortDir") final String sortDir) {
+        final Page<Contact> msgPage = this.contactService.findMsgsWithOpenStatus(pageNum, sortField, sortDir);
+        final List<Contact> contactMsgs = msgPage.getContent();
+        final ModelAndView modelAndView = new ModelAndView("messages.html");
         model.addAttribute("currentPage", pageNum);
         model.addAttribute("totalPages", msgPage.getTotalPages());
         model.addAttribute("totalMsgs", msgPage.getTotalElements());
         model.addAttribute("sortField", sortField);
         model.addAttribute("sortDir", sortDir);
-        model.addAttribute("reverseSortDir", sortDir.equals("asc") ? "desc" : "asc");
-        modelAndView.addObject("contactMsgs",contactMsgs);
+        model.addAttribute("reverseSortDir", "asc".equals(sortDir) ? "desc" : "asc");
+        modelAndView.addObject("contactMsgs", contactMsgs);
         return modelAndView;
     }
 
     @GetMapping(value = "/closeMsg")
     public String closeMsg(@RequestParam final int id) {
-      this.contactService.updateMsgStatus(id);
-        return "redirect:/displayMessages";
+        this.contactService.updateMsgStatus(id);
+        return "redirect:/displayMessages/page/1?sortField=name&sortDir=asc";
     }
 
 }
