@@ -10,12 +10,13 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @EnableJpaRepositories("com.eazybytes.eazyschool.repository")
 @EntityScan("com.eazybytes.eazyschool.model")
 @EnableJpaAuditing(auditorAwareRef = "auditAwareImpl")
+
 public class EazyschoolApplication {
 
-	public static void main(String[] args) {
-		System.out.println("ENV URL: " + System.getenv("DB_URL"));
+    public static void main(String[] args) {
+        System.out.println("ENV URL: " + System.getenv("DB_URL"));
 
-		SpringApplication.run(EazyschoolApplication.class, args);
-	}
+        SpringApplication.run(EazyschoolApplication.class, args);
+    }
 
 }

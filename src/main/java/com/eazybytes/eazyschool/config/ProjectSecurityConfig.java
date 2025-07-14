@@ -15,27 +15,31 @@ public class ProjectSecurityConfig {
     SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(csrf -> csrf
-                .ignoringRequestMatchers("/saveMsg", "/holidays/**", "/public/**")
+                        .ignoringRequestMatchers("/saveMsg", "/holidays/**", "/public/**", "/api/**", "/assets/**", "/eazyschool/actuator/**") // CSRF protection is disabled for these endpoints
                 )
                 .authorizeHttpRequests(authorize -> authorize
-                .requestMatchers("/home", "/").permitAll()
-                .requestMatchers("/holidays/**").permitAll()
-                .requestMatchers("/contact").permitAll()
-                .requestMatchers("/dashboard").authenticated()
-                .requestMatchers("/displayProfile").authenticated()
-                .requestMatchers("/updateProfile").authenticated()
-                .requestMatchers("/displayMessages/**").hasRole("ADMIN")
-                .requestMatchers("/admin/**").hasRole("ADMIN")
-                .requestMatchers("/closeMsg/**").hasRole("ADMIN")
-                .requestMatchers("/student/**").hasRole("STUDENT")
-                .requestMatchers("/about").permitAll()
-                .requestMatchers("/saveMsg").permitAll()
-                .requestMatchers("/courses").permitAll()
-                .requestMatchers("/login").permitAll()
-                .requestMatchers("/logout").permitAll()
-                .requestMatchers("/public/**").permitAll()
-                .requestMatchers("/assets/**").permitAll()
-                .anyRequest().authenticated()
+                        .requestMatchers("/home", "/").permitAll()
+                        .requestMatchers("/holidays/**").permitAll()
+                        .requestMatchers("/contact").permitAll()
+                        .requestMatchers("/profile/**").permitAll()
+                        .requestMatchers("/api/**").authenticated()
+                        .requestMatchers("/dashboard").authenticated()
+                        .requestMatchers("/displayProfile").authenticated()
+                        .requestMatchers("/updateProfile").authenticated()
+                        .requestMatchers("/displayMessages/**").hasRole("ADMIN")
+                        .requestMatchers("/admin/**").hasRole("ADMIN")
+                        .requestMatchers("/closeMsg/**").hasRole("ADMIN")
+                        .requestMatchers("/student/**").hasRole("STUDENT")
+                        .requestMatchers("/about").permitAll()
+                        .requestMatchers("/saveMsg").permitAll()
+                        .requestMatchers("/courses").permitAll()
+                        .requestMatchers("/eazyschool/actuator/**").hasRole("ADMIN")
+                        .requestMatchers("/login").permitAll()
+                        .requestMatchers("/logout").permitAll()
+                        .requestMatchers("/public/**").permitAll()
+                        .requestMatchers("/assets/**").permitAll()
+                        .requestMatchers("/api/**").permitAll()
+                        .anyRequest().authenticated()
                 )
                 .formLogin(formLogin
                         -> formLogin.loginPage("/login")
@@ -44,9 +48,9 @@ public class ProjectSecurityConfig {
                         .failureUrl("/login?error=true")
                 )
                 .logout(logout -> logout
-                .logoutSuccessUrl("/login?logout=true")
-                .permitAll()
-                .invalidateHttpSession(true)
+                        .logoutSuccessUrl("/login?logout=true")
+                        .permitAll()
+                        .invalidateHttpSession(true)
                 );
 
         return http.build();
