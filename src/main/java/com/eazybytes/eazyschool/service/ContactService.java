@@ -1,5 +1,10 @@
 package com.eazybytes.eazyschool.service;
 
+import com.eazybytes.eazyschool.config.EazySchoolProps;
+import com.eazybytes.eazyschool.constants.EazySchoolConstants;
+import com.eazybytes.eazyschool.model.Contact;
+import com.eazybytes.eazyschool.repository.ContactRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -7,12 +12,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.annotation.ApplicationScope;
-
-import com.eazybytes.eazyschool.constants.EazySchoolConstants;
-import com.eazybytes.eazyschool.model.Contact;
-import com.eazybytes.eazyschool.repository.ContactRepository;
-
-import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Service
@@ -22,6 +21,9 @@ public class ContactService {
 
     @Autowired
     private ContactRepository contactRepository;
+
+    @Autowired
+    private EazySchoolProps eazySchoolProps;
 
     public boolean saveMessageDetails(final Contact contact) {
         boolean isSaved = false;
@@ -37,13 +39,18 @@ public class ContactService {
     }
 
     public Page<Contact> findMsgsWithOpenStatus(final int pageNum, final String sortField, final String sortDir) {
-        final int pageSize = 5;
+        int pageSize = this.eazySchoolProps.getPageSize();
+
+        if (eazySchoolProps.getContact() != null && eazySchoolProps.getContact().get("pageSize") != null) {
+            pageSize = Integer.parseInt(eazySchoolProps.getContact().get("pageSize").trim());
+        }
+
         final Pageable pageable = PageRequest.of(pageNum - 1, pageSize,
                 "asc".equals(sortDir) ? Sort.by(sortField).ascending()
                         : Sort.by(sortField).descending());
         return this.contactRepository.findAllByStatus
                 (
-                EazySchoolConstants.OPEN, pageable);
+                        EazySchoolConstants.OPEN, pageable);
     }
 
     public boolean updateMsgStatus(final int contactId) {
